@@ -12,9 +12,9 @@ import com.xhxy.eshop.entity.Cart;
 import com.xhxy.eshop.service.AddressService;
 import com.xhxy.eshop.service.CartService;
 import com.xhxy.eshop.service.OrderService;
-import com.xhxy.eshop.service.impl.AddressServiceImpl;
-import com.xhxy.eshop.service.impl.CartServiceImpl;
-import com.xhxy.eshop.service.impl.OrderServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.AddressServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.CartServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.OrderServiceImpl;
 @WebServlet("/order")
 public class OrderController extends BaseServlet {
 	private static final long serialVersionUID = 1L;

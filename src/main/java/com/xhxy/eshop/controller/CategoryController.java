@@ -1,7 +1,6 @@
 package com.xhxy.eshop.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,8 +12,8 @@ import com.xhxy.eshop.entity.Category;
 import com.xhxy.eshop.entity.Product;
 import com.xhxy.eshop.service.CategoryService;
 import com.xhxy.eshop.service.ProductService;
-import com.xhxy.eshop.service.impl.CategoryServiceImpl;
-import com.xhxy.eshop.service.impl.ProductServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.CategoryServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.ProductServiceImpl;
 
 /**
  * 商品的分类 ：指定分类、全部商品、搜索商品

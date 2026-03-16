@@ -12,8 +12,8 @@ import com.xhxy.eshop.entity.Cart;
 import com.xhxy.eshop.entity.User;
 import com.xhxy.eshop.service.CartService;
 import com.xhxy.eshop.service.UserService;
-import com.xhxy.eshop.service.impl.CartServiceImpl;
-import com.xhxy.eshop.service.impl.UserServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.CartServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.UserServiceImpl;
 
 /**
  * 用户Servlet：处理登录、注册、退出

@@ -1,7 +1,6 @@
 package com.xhxy.eshop.controller;
 
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -17,9 +16,9 @@ import com.xhxy.eshop.entity.Product;
 import com.xhxy.eshop.service.BlogService;
 import com.xhxy.eshop.service.CategoryService;
 import com.xhxy.eshop.service.ProductService;
-import com.xhxy.eshop.service.impl.BlogServiceImpl;
-import com.xhxy.eshop.service.impl.CategoryServiceImpl;
-import com.xhxy.eshop.service.impl.ProductServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.BlogServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.CategoryServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.ProductServiceImpl;
 
 // 首页：展示首页
 @WebServlet("/index")

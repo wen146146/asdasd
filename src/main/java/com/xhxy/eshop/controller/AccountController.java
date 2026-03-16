@@ -18,9 +18,9 @@ import com.xhxy.eshop.entity.User;
 import com.xhxy.eshop.service.AddressService;
 import com.xhxy.eshop.service.OrderService;
 import com.xhxy.eshop.service.UserService;
-import com.xhxy.eshop.service.impl.AddressServiceImpl;
-import com.xhxy.eshop.service.impl.OrderServiceImpl;
-import com.xhxy.eshop.service.impl.UserServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.AddressServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.OrderServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.UserServiceImpl;
 
 // 账号中心：处理 订单列表、详情、收货地址的增删改查、个人信息修改
 @WebServlet("/account")

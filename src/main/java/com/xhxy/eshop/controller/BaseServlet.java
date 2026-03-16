@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.xhxy.eshop.service.CategoryService;
-import com.xhxy.eshop.service.impl.CategoryServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.CategoryServiceImpl;
 
 // 所有Controller（Servlet）的父类：解析请求的method参数，转到对应的Controller的同名方法中
 public class BaseServlet extends HttpServlet {

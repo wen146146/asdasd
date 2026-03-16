@@ -11,9 +11,9 @@ import com.xhxy.eshop.entity.Comment;
 import com.xhxy.eshop.service.BlogService;
 import com.xhxy.eshop.service.CommentService;
 import com.xhxy.eshop.service.UserService;
-import com.xhxy.eshop.service.impl.BlogServiceImpl;
-import com.xhxy.eshop.service.impl.CommentServiceImpl;
-import com.xhxy.eshop.service.impl.UserServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.BlogServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.CommentServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.UserServiceImpl;
 
 // 推荐文章：列表、详情、评论
 @WebServlet("/blog")

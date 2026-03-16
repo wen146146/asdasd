@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.xhxy.eshop.entity.Faq;
 import com.xhxy.eshop.service.FaqService;
-import com.xhxy.eshop.service.impl.FaqServiceImpl;
+import com.xhxy.eshop.service.impl.mybatis.FaqServiceImpl;
 
 // 常见问题Faq：列表
 @WebServlet("/faq")

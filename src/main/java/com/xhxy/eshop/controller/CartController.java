@@ -11,8 +11,8 @@ import com.xhxy.eshop.entity.Cart;
 import com.xhxy.eshop.entity.Product;
 import com.xhxy.eshop.service.CartService;
 import com.xhxy.eshop.service.ProductService;
-import com.xhxy.eshop.service.impl.CartServiceImpl;
-import com.xhxy.eshop.service.impl.ProductServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.CartServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.ProductServiceImpl;
 
 /**
  * 购物车的控制器类：查看购物车、添加商品到购物车

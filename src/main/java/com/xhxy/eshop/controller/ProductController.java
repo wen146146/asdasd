@@ -12,8 +12,8 @@ import com.xhxy.eshop.entity.Evaluation;
 import com.xhxy.eshop.entity.Product;
 import com.xhxy.eshop.service.EvaluationService;
 import com.xhxy.eshop.service.ProductService;
-import com.xhxy.eshop.service.impl.EvaluationServiceImpl;
-import com.xhxy.eshop.service.impl.ProductServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.EvaluationServiceImpl;
+import com.xhxy.eshop.service.impl.jdbc.ProductServiceImpl;
 
 /**
  * 商品：详情页

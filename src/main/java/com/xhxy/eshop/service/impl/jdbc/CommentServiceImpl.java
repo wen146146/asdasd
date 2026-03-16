@@ -1,4 +1,4 @@
-package com.xhxy.eshop.service.impl;
+package com.xhxy.eshop.service.impl.jdbc;
 
 import com.xhxy.eshop.dao.CommentDao;
 import com.xhxy.eshop.dao.impl.CommentDaoImpl;
