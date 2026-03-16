@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<!-- 指定日志输出到哪里 -->
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%5p [%t] %logger{36} %m%n"/>
+		</Console>
+	</Appenders>
+	<Loggers>
+		<!-- 定义全局的根日志 -->
+		<Root level="error">
+			<AppenderRef ref="Console"/>
+		</Root>
+		<!-- level可以定义info debug warning、error这些级别 -->
+		<Logger name="com.xhxy.eshop.mapper" level="debug"/>
+	</Loggers>
+</Configuration>
