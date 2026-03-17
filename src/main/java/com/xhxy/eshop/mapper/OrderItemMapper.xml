@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhxy.eshop.mapper.OrderItemMapper">
+	<select id="findByOrderId" resultType="com.xhxy.eshop.entity.OrderItem">
+		select id, product_id, quantity, total from orderitem where order_id = #{orderId}
+	</select>
+	<insert id="save" parameterType="com.xhxy.eshop.entity.OrderItem">
+		insert into orderitem(product_id,quantity,order_id,total) values(#{product.id},#{quantity},#{order.id},#{total})
+	</insert>
+	<insert id="batchSave">
+		insert into orderitem(product_id,quantity,order_id,total) values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.product.id},#{item.quantity},#{item.order.id},#{item.total})
+		</foreach>
+	</insert>
+</mapper>

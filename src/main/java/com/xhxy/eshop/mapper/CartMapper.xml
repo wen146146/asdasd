@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhxy.eshop.mapper.CartMapper">
+	<select id="findByUserId" resultType="com.xhxy.eshop.entity.Cart">
+		select id, total from cart where user_id = #{userId}
+	</select>
+	<select id="findById" resultType="com.xhxy.eshop.entity.Cart">
+		select id, total from cart where id = #{id}
+	</select>
+	<insert id="add" parameterType="com.xhxy.eshop.entity.Cart">
+		insert into cart(user_id) values(#{userId})
+	</insert>
+	<update id="updateTotal">
+		update cart set total = #{cartTotal} where id = #{cartId}
+	</update>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+		PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<environments default="mysql">
+		<environment id="mysql">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+				<property name="url" value="jdbc:mysql://127.0.0.1:3306/esop?useSSL=false&amp;serverTimezone=Asia/Shanghai"/>
+				<property name="username" value="root"/>
+				<property name="password" value=""/>
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper resource="com/xhxy/eshop/mapper/CategoryMapper.xml"/>
+		<mapper resource="com/xhxy/eshop/mapper/ProductMapper.xml"/>
+		<mapper resource="com/xhxy/eshop/mapper/UserMapper.xml"/>
+		<mapper resource="com/xhxy/eshop/mapper/CartMapper.xml"/>
+		<mapper resource="com/xhxy/eshop/mapper/CartItemMapper.xml"/>
+		<mapper resource="com/xhxy/eshop/mapper/AddressMapper.xml"/>
+		<mapper resource="com/xhxy/eshop/mapper/OrderMapper.xml"/>
+		<mapper resource="com/xhxy/eshop/mapper/OrderItemMapper.xml"/>
+		<mapper resource="com/xhxy/eshop/mapper/BlogMapper.xml"/>
+		<mapper resource="com/xhxy/eshop/mapper/FaqMapper.xml"/>
+		<mapper resource="com/xhxy/eshop/mapper/CommentMapper.xml"/>
+		<mapper resource="com/xhxy/eshop/mapper/EvaluationMapper.xml"/>
+		<mapper resource="com/xhxy/eshop/mapper/CategoryMapper.xml"/>
+		<mapper resource="com/xhxy/eshop/mapper/PictureMapper.xml"/>
+	</mappers>
+</configuration>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhxy.eshop.mapper.CategoryMapper">
+	<select id="findById" resultType="com.xhxy.eshop.entity.Category">
+		select id, name, grade, icon, parent from category where id = #{id}
+	</select>
+	<select id="findAll" resultType="com.xhxy.eshop.entity.Category">
+		select id, name, grade, icon, parent from category
+	</select>
+	<select id="findTopCategory" resultType="com.xhxy.eshop.entity.Category">
+		select id, name, grade, icon, parent from category where grade = 0
+	</select>
+	<select id="findChildCategory" resultType="com.xhxy.eshop.entity.Category">
+		select id, name, grade, icon, parent from category where parent = #{parentId}
+	</select>
+</mapper>

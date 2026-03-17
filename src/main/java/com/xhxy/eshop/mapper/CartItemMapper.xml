@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhxy.eshop.mapper.CartItemMapper">
+	<select id="findById" resultType="com.xhxy.eshop.entity.CartItem">
+		select id, quantity, total from cartitem where id = #{id}
+	</select>
+	<select id="findByCartId" resultType="com.xhxy.eshop.entity.CartItem">
+		select id, quantity, total from cartitem where cart_id = #{cartId}
+	</select>
+	<select id="findByCartIdAndProductId" resultType="int">
+		select count(*) from cartitem where cart_id = #{cartId} and product_id = #{productId}
+	</select>
+	<insert id="add">
+		insert into cartitem(product_id,quantity,cart_id,total) values(#{product.id},#{quantity},#{cartId},#{total})
+	</insert>
+	<delete id="deleteByCartId">
+		delete from cartitem where cart_id = #{cartId}
+	</delete>
+	<update id="update">
+		update cartitem set quantity = #{quantity}, total = #{total} where id = #{cartItemId}
+	</update>
+</mapper>

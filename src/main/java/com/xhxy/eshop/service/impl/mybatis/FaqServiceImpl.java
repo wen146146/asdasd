@@ -1,7 +1,5 @@
 package com.xhxy.eshop.service.impl.mybatis;
 
-import com.xhxy.eshop.dao.FaqDao;
-import com.xhxy.eshop.dao.impl.FaqDaoImpl;
 import com.xhxy.eshop.entity.Faq;
 import com.xhxy.eshop.mapper.FaqMapper;
 import com.xhxy.eshop.service.FaqService;
@@ -15,6 +13,9 @@ public class FaqServiceImpl implements FaqService {
 	
 	@Override
 	public List<Faq> findAll() {
+		// 数据库操作: SELECT * FROM faq
+		// 参数: 无
+		// 返回: 所有常见问题列表
 		return faqMapper.findAll();
 	}
 

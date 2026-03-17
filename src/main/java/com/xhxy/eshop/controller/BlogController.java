@@ -11,11 +11,14 @@ import com.xhxy.eshop.entity.Comment;
 import com.xhxy.eshop.service.BlogService;
 import com.xhxy.eshop.service.CommentService;
 import com.xhxy.eshop.service.UserService;
-import com.xhxy.eshop.service.impl.jdbc.BlogServiceImpl;
-import com.xhxy.eshop.service.impl.jdbc.CommentServiceImpl;
-import com.xhxy.eshop.service.impl.jdbc.UserServiceImpl;
+import com.xhxy.eshop.service.impl.mybatis.BlogServiceImpl;
+import com.xhxy.eshop.service.impl.mybatis.CommentServiceImpl;
+import com.xhxy.eshop.service.impl.mybatis.UserServiceImpl;
 
-// 推荐文章：列表、详情、评论
+// BlogController: 博客/文章控制器
+// 访问路径: /blog
+// 涉及页面: blog-list.jsp(文章列表), blog-detail.jsp(文章详情)
+// 功能: 1.获取文章列表 2.获取文章详情 3.提交评论
 @WebServlet("/blog")
 public class BlogController  extends BaseServlet {
 
@@ -24,6 +27,10 @@ public class BlogController  extends BaseServlet {
 	private CommentService commentService = new CommentServiceImpl();
 	
 	// 文章列表
+	// 功能: 获取所有博客文章列表
+	// 参数: 无
+	// 返回页面: blog-list.jsp
+	// 数据库操作: BlogService.findAll() -> 查询所有文章
 	public String index(HttpServletRequest request, HttpServletResponse response) {
 		List<Blog> blogs = blogService.findAll();
 		
@@ -32,6 +39,10 @@ public class BlogController  extends BaseServlet {
 	}
 	
 	// 文章详情
+	// 功能: 获取单篇博客文章的详细内容，同时获取关联的评论
+	// 参数: id（请求参数）- 文章ID
+	// 返回页面: blog-detail.jsp
+	// 数据库操作: BlogService.findByBlogId() -> 根据ID查询文章
 	public String detail(HttpServletRequest request, HttpServletResponse response) {
 		Integer blogId = Integer.parseInt(request.getParameter("id"));
 		Blog blog = blogService.findByBlogId(blogId);
@@ -39,7 +50,12 @@ public class BlogController  extends BaseServlet {
 		request.setAttribute("blog", blog);
 		return "blog-detail.jsp";
 	}
+	
 	// 提交评论
+	// 功能: 用户对文章提交评论
+	// 参数: blogId(文章ID), userId(用户ID), content(评论内容)
+	// 返回: 重定向到文章详情页（r:表示重定向）
+	// 数据库操作: CommentService.save() -> 保存评论
 	public String saveComment(HttpServletRequest request, HttpServletResponse response) {
 		Integer blogId = Integer.parseInt(request.getParameter("blogId"));
 		Integer userId = Integer.parseInt(request.getParameter("userId"));
@@ -53,6 +69,6 @@ public class BlogController  extends BaseServlet {
 		
 		commentService.save(comment);
 		
-		return "r:/blog?method=detail&id="+blogId;	// 使用重定向
+		return "r:/blog?method=detail&id="+blogId;
 	}
 }

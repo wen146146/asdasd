@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * 请求监听器
  *
  */
-@WebListener
+//@WebListener
 public class MyRequestListener implements ServletRequestListener {
 
 	/**

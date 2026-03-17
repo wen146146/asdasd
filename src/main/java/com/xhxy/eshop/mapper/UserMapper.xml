@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhxy.eshop.mapper.UserMapper">
+	<!-- <insert id="addUser" parameterType="com.xhxy.eshop.entity.User" >
+		insert into user(username,password,phone,email,avatar) values(#{username},#{password},#{phone},#{email},#{avatar})
+	</insert> -->
+	<insert id="addUser" parameterType="com.xhxy.eshop.entity.User">
+    <selectKey keyProperty="id" resultType="int" order="AFTER">
+        SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user(username,password,phone,email,avatar) 
+    values(#{username},#{password},#{phone},#{email},#{avatar})
+	</insert>
+	
+	<select id="login" resultType="int">
+		select id from user where username=#{username} and password=#{password}
+	</select>
+	<select id="findById" resultType="com.xhxy.eshop.entity.User">
+		select id, username, password, phone, email, avatar from user where id = #{id}
+	</select>
+	<update id="update" parameterType="com.xhxy.eshop.entity.User">
+		update user set username = #{username}, password = #{password}, phone = #{phone}, email = #{email}, avatar = #{avatar} where id = #{id}
+	</update>
+	<select id="findPasswordById" resultType="String">
+		select password from user where id = #{id}
+	</select>
+</mapper>

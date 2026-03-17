@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSessionListener;
  * 会话监听器
  *
  */
-@WebListener
+//@WebListener
 public class MySessionListener implements HttpSessionListener {
 
     /**

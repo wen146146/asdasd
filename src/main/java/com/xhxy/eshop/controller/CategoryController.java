@@ -12,12 +12,13 @@ import com.xhxy.eshop.entity.Category;
 import com.xhxy.eshop.entity.Product;
 import com.xhxy.eshop.service.CategoryService;
 import com.xhxy.eshop.service.ProductService;
-import com.xhxy.eshop.service.impl.jdbc.CategoryServiceImpl;
-import com.xhxy.eshop.service.impl.jdbc.ProductServiceImpl;
+import com.xhxy.eshop.service.impl.mybatis.CategoryServiceImpl;
+import com.xhxy.eshop.service.impl.mybatis.ProductServiceImpl;
 
-/**
- * 商品的分类 ：指定分类、全部商品、搜索商品
- */
+// CategoryController: 商品分类控制器
+// 访问路径: /category
+// 涉及页面: category.jsp(商品分类页面)
+// 功能: 1.展示指定分类的商品 2.展示全部分类的商品 3.搜索商品
 @WebServlet("/category")
 public class CategoryController extends BaseServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,21 +26,22 @@ public class CategoryController extends BaseServlet {
 	private CategoryService categoryService = new CategoryServiceImpl();
 	private ProductService productService = new ProductServiceImpl();
 
-	// 1.展示指定分类的商品
+	// 展示指定分类的商品
+	// 功能: 根据分类ID获取该分类下的所有商品
+	// 参数: id（请求参数）- 分类ID
+	// 返回页面: category.jsp
+	// 数据库操作: CategoryService.findTopCategory() -> 查询顶层分类列表
+	//             CategoryService.findById() -> 根据ID查询分类
+	//             ProductService.findListByCategoryId() -> 根据分类ID查询商品列表
 	public String list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 获取请求参数：分类Id号
 		Integer id = Integer.parseInt(request.getParameter("id"));
 		
-		// 获取全部的顶层分类：用于左侧的分类列表
 		List<Category> topCategoryList = categoryService.findTopCategory();
 		
-		// 获取id对应的分类
-		Category category = categoryService.findById(id);//当前的分类
+		Category category = categoryService.findById(id);
 		
-		// 获取某个id号的Category里所有的product
 		List<Product> productList = productService.findListByCategoryId(id);
 		
-		// 请求转发
 		request.setAttribute("topCategoryList", topCategoryList);
 		request.setAttribute("category", category);
 		request.setAttribute("productList", productList);
@@ -47,35 +49,42 @@ public class CategoryController extends BaseServlet {
 		return "category.jsp";
 	}
 	
-	// 2.默认为展示全部分类的商品(调用all()方法)
+	// 默认入口：展示全部分类的商品
+	// 功能: 调用all()方法显示所有商品
+	// 参数: 无
+	// 返回页面: category.jsp
 	public String index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		return all(request,response);
 	}
 	
 	// 展示全部分类的商品
+	// 功能: 获取所有商品列表
+	// 参数: 无
+	// 返回页面: category.jsp
+	// 数据库操作: CategoryService.findTopCategory() -> 查询顶层分类列表
+	//             ProductService.findAll() -> 查询所有商品
 	public String all(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 获取全部的顶层分类
 		List<Category> topCategoryList = categoryService.findTopCategory();
 				
-		// 获取所有的product
 		List<Product> productList = productService.findAll();
 				
-		// 请求转发
 		request.setAttribute("topCategoryList", topCategoryList);
 		request.setAttribute("productList", productList);
 					
 		return "category.jsp";
 	}	
 	
-	
-	
-	// 3.展示搜索的商品列表
+	// 搜索商品
+	// 功能: 根据关键词搜索商品（支持按名称、简介、详情搜索）
+	// 参数: name(商品名称), brief(商品简介), detail(商品详情)
+	// 返回页面: category.jsp
+	// 数据库操作: ProductService.findByKeywords() -> 根据关键词搜索商品
+	//             CategoryService.findTopCategory() -> 查询顶层分类列表
 	public String search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 1.获取请求参数：搜索词
-		String name = request.getParameter("name"); 	// 商品名称 搜索词
-		String brief = request.getParameter("brief"); 	// 商品简介 搜索词
-		String detail = request.getParameter("detail"); // 商品详情 搜索词
+		String name = request.getParameter("name");
+		String brief = request.getParameter("brief");
+		String detail = request.getParameter("detail");
 		if(name.isBlank())
 			name = null;
 		if(brief.isBlank())
@@ -83,20 +92,16 @@ public class CategoryController extends BaseServlet {
 		if(detail.isBlank())
 			detail = null;
 		
-		// 3.按搜索词进行product搜索
-		List<Product> productList = productService.findByKeywords(name,brief,detail);// 不分页
+		List<Product> productList = productService.findByKeywords(name,brief,detail);
 		
-		// 4.获取全部的顶层分类：用于左侧的分类列表
 		List<Category> topCategoryList = categoryService.findTopCategory();
 		
-		// 5.设置属性
-		request.setAttribute("name",name);					// 请求参数name，再传回去给分页栏
-		request.setAttribute("brief",brief);				// 请求参数brief，再传回去给分页栏
-		request.setAttribute("detail",detail);				// 请求参数detail，再传回去给分页栏
+		request.setAttribute("name",name);
+		request.setAttribute("brief",brief);
+		request.setAttribute("detail",detail);
 		request.setAttribute("topCategoryList", topCategoryList);
 		request.setAttribute("productList", productList);
 		
-		// 6.请求转发
 		return "category.jsp";
 	}
 }
