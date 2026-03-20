@@ -2,19 +2,6 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0" >
   <display-name>eshop</display-name>
 
-    <!-- Log4j2 配置文件位置 -->
-    <context-param>
-        <param-name>log4jConfiguration</param-name>
-        <param-value>classpath:log4j2.xml</param-value>
-    </context-param>
-
-    <!-- 正确监听器配置 -->
-    <listener>
-        <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
-    </listener>
-
-
-
     <error-page>
   	<error-code>404</error-code>
   	<location>/404.jsp</location>

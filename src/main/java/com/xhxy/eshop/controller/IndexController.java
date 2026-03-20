@@ -57,7 +57,7 @@ public class IndexController  extends BaseServlet {
 		
 		// 从properties属性文件中读取站点统计信息
 		Properties props = new Properties();
-		InputStream in = new BufferedInputStream(getClass().getResourceAsStream("/com/xhxy/eshop/eshop.properties"));
+		InputStream in = new BufferedInputStream(getClass().getResourceAsStream("/eshop.properties"));
 		props.load(in);
 		
 		// 2.将数据对象设置到request域中，供页面使用

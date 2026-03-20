@@ -130,11 +130,11 @@
 		          </div>
 		          <div class="form-group col-md-12">
 	                <label>商品简介</label>
-		              <input id="form_name" type="text" name="brief" class="form-control">
+		              <input id="form_brief" type="text" name="brief" class="form-control">
 		          </div>
 		          <div class="form-group col-md-12">
 	                <label>商品详情</label>
-		              <input id="form_name" type="text" name="detail" class="form-control">
+		              <input id="form_detail" type="text" name="detail" class="form-control">
 		          </div>
 		          <div class="form-group col-md-12">
 	                <input type="submit" class="btn btn-primary btn-animated" value="搜索" />
