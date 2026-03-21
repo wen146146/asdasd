@@ -3,19 +3,51 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xhxy.eshop.mapper.ProductMapper">
-	<select id="findById" resultType="com.xhxy.eshop.entity.Product">
-		select id, name, price, original_price, brief, detail, stock, pic, pic2, hot, latest, category_id from product where id = #{id}
+	<resultMap id="ProductResultMap" type="com.xhxy.eshop.entity.Product">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="price" column="price"/>
+		<result property="originalPrice" column="original_price"/>
+		<result property="brief" column="brief"/>
+		<result property="detail" column="detail"/>
+		<result property="stock" column="stock"/>
+		<result property="pic" column="pic"/>
+		<result property="pic2" column="pic2"/>
+		<result property="hot" column="hot"/>
+		<result property="latest" column="latest"/>
+		<association property="category" javaType="com.xhxy.eshop.entity.Category">
+			<id property="id" column="category_id"/>
+			<result property="name" column="category_name"/>
+		</association>
+	</resultMap>
+	
+	<select id="findById" resultMap="ProductResultMap">
+		select p.id, p.name, p.price, p.original_price, p.brief, p.detail, p.stock, p.pic, p.pic2, p.hot, p.latest, p.category_id, c.name as category_name
+		from product p
+		left join category c on p.category_id = c.id
+		where p.id = #{id}
 	</select>
-	<select id="findListByCategoryId" resultType="com.xhxy.eshop.entity.Product">
-		select id, name, price, original_price, brief, detail, stock, pic, pic2, hot, latest, category_id from product where category_id = #{categoryId}
+	<select id="findListByCategoryId" resultMap="ProductResultMap">
+		select p.id, p.name, p.price, p.original_price, p.brief, p.detail, p.stock, p.pic, p.pic2, p.hot, p.latest, p.category_id, c.name as category_name
+		from product p
+		left join category c on p.category_id = c.id
+		where p.category_id = #{categoryId}
 	</select>
-	<select id="findAll" resultType="com.xhxy.eshop.entity.Product">
-		select id, name, price, original_price, brief, detail, stock, pic, pic2, hot, latest, category_id from product
+	<select id="findAll" resultMap="ProductResultMap">
+		select p.id, p.name, p.price, p.original_price, p.brief, p.detail, p.stock, p.pic, p.pic2, p.hot, p.latest, p.category_id, c.name as category_name
+		from product p
+		left join category c on p.category_id = c.id
 	</select>
-	<select id="findHot" resultType="com.xhxy.eshop.entity.Product">
-		select id, name, price, original_price, brief, detail, stock, pic, pic2, hot, latest, category_id from product where hot = 1 limit #{n}
+	<select id="findHot" resultMap="ProductResultMap">
+		select p.id, p.name, p.price, p.original_price, p.brief, p.detail, p.stock, p.pic, p.pic2, p.hot, p.latest, p.category_id, c.name as category_name
+		from product p
+		left join category c on p.category_id = c.id
+		where p.hot = 1 limit #{n}
 	</select>
-	<select id="findLatest" resultType="com.xhxy.eshop.entity.Product">
-		select id, name, price, original_price, brief, detail, stock, pic, pic2, hot, latest, category_id from product where latest = 1 limit #{n}
+	<select id="findLatest" resultMap="ProductResultMap">
+		select p.id, p.name, p.price, p.original_price, p.brief, p.detail, p.stock, p.pic, p.pic2, p.hot, p.latest, p.category_id, c.name as category_name
+		from product p
+		left join category c on p.category_id = c.id
+		where p.latest = 1 limit #{n}
 	</select>
 </mapper>

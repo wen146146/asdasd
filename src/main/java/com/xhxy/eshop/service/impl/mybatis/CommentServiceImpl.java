@@ -1,5 +1,7 @@
 package com.xhxy.eshop.service.impl.mybatis;
 
+import java.util.List;
+
 import com.xhxy.eshop.entity.Comment;
 import com.xhxy.eshop.mapper.CommentMapper;
 import com.xhxy.eshop.service.CommentService;
@@ -17,5 +19,13 @@ public class CommentServiceImpl implements CommentService {
 		int result = commentMapper.save(comment);
 		MybatisUtlils.getSqlSession().commit();
 		return result;
+	}
+	
+	@Override
+	public List<Comment> findByBlogId(Integer blogId) {
+		// 数据库操作: SELECT * FROM comment WHERE blog_id = ?
+		// 参数: blogId - 博客ID
+		// 返回: 该博客的所有评论列表
+		return commentMapper.findByBlogId(blogId);
 	}
 }

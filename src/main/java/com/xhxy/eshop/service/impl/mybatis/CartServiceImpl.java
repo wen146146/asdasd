@@ -22,6 +22,16 @@ public class CartServiceImpl implements CartService {
 		// 返回: 购物车对象，找不到返回null
 		return cartMapper.findByUserId(userId);
 	}
+	
+	@Override
+	public boolean create(Integer userId) {
+		// 数据库操作: INSERT INTO cart (user_id) VALUES (?)
+		// 参数: userId - 用户ID
+		// 返回: 成功返回true
+		cartMapper.add(userId);
+		MybatisUtlils.getSqlSession().commit();
+		return true;
+	}
 
 	@Override
 	public boolean clear(Integer cartId) {
@@ -37,7 +47,7 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public boolean add(Product product, int quantity, int cartId) {
 		// 数据库操作: 
-		//   1. SELECT * FROM cart_item WHERE cart_id = ? AND product_id = ?
+		//   1. SELECT id FROM cart_item WHERE cart_id = ? AND product_id = ?
 		//   2. 如果存在: UPDATE cart_item SET quantity = ?, total = ? WHERE id = ?
 		//   3. 如果不存在: INSERT INTO cart_item (...)
 		//   4. 重新计算购物车总价: UPDATE cart SET total = ?

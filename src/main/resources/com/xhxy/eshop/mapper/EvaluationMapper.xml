@@ -3,7 +3,23 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xhxy.eshop.mapper.EvaluationMapper">
-	<select id="findByProductId" resultType="com.xhxy.eshop.entity.Evaluation">
-		select id, content, score, createtime, product_id, user_id from evaluation where product_id = #{productId}
+	<resultMap id="EvaluationResultMap" type="com.xhxy.eshop.entity.Evaluation">
+		<id property="id" column="id"/>
+		<result property="content" column="content"/>
+		<result property="createTime" column="createtime"/>
+		<association property="user" javaType="com.xhxy.eshop.entity.User">
+			<id property="id" column="user_id"/>
+			<result property="username" column="username"/>
+		</association>
+		<association property="product" javaType="com.xhxy.eshop.entity.Product">
+			<id property="id" column="product_id"/>
+		</association>
+	</resultMap>
+	
+	<select id="findByProductId" resultMap="EvaluationResultMap">
+		select e.id, e.content, e.createtime, e.product_id, e.user_id, u.username 
+		from evaluation e 
+		left join user u on e.user_id = u.id 
+		where e.product_id = #{productId}
 	</select>
 </mapper>

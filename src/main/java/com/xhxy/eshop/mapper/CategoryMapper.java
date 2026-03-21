@@ -18,7 +18,6 @@ public interface CategoryMapper {
 	// 参数: 无
 	// 返回: 顶级分类列表（一级分类）
 	List<Category> findTopCategory();
-	
 	// 数据库操作: SELECT * FROM category WHERE parent_id = ?
 	// 参数: parentId - 父分类ID
 	// 返回: 子分类列表

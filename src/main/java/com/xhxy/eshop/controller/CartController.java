@@ -55,9 +55,14 @@ public class CartController extends BaseServlet {
 		Integer productId = Integer.parseInt(request.getParameter("id"));
 		
 		Product product = productService.findById(productId);
-		Integer cartId = cartService.findByUserId(userId).getId();
+		Cart cart = cartService.findByUserId(userId);
 		
-		cartService.add(product, 1, cartId);
+		if(cart == null) {
+			cartService.create(userId);
+			cart = cartService.findByUserId(userId);
+		}
+		
+		cartService.add(product, 1, cart.getId());
 		
 		return "cart?method=view";
 	}

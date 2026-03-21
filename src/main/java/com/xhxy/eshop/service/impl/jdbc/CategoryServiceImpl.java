@@ -26,4 +26,8 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryDao.findTopCategory();
 	}
 
+	public List<Category> findChildCategory(Integer parentId) {
+		return categoryDao.findChildCategory(parentId);
+	}
+
 }

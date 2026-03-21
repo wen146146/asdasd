@@ -21,6 +21,11 @@ public class CartServiceImpl implements CartService {
 		return cartDao.findByUserId(userId);
 	}
 
+	@Override
+	public boolean create(Integer userId) {
+		return false;
+	}
+
 	// 将本Cart清空(包括其cartItem)
 	@Override
 	public boolean clear(Integer cartId) {

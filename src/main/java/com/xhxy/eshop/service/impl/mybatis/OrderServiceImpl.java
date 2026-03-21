@@ -28,22 +28,20 @@ public class OrderServiceImpl implements OrderService {
 	public Integer createOrder(Cart cart, Address address) {
 		// 数据库操作: 
 		//   1. INSERT INTO order (...) - 创建订单
-		//   2. SELECT * FROM order WHERE id = ? - 获取订单ID
-		//   3. SELECT * FROM cart_item WHERE cart_id = ? - 获取购物车项
-		//   4. INSERT INTO order_item (...) - 批量插入订单项
-		//   5. DELETE FROM cart_item WHERE cart_id = ? - 清空购物车项
-		//   6. UPDATE cart SET total = 0 WHERE id = ? - 重置购物车总价
+		//   2. SELECT * FROM cart_item WHERE cart_id = ? - 获取购物车项
+		//   3. INSERT INTO order_item (...) - 批量插入订单项
+		//   4. DELETE FROM cart_item WHERE cart_id = ? - 清空购物车项
+		//   5. UPDATE cart SET total = 0 WHERE id = ? - 重置购物车总价
 		// 参数: cart - 购物车对象, address - 地址对象
 		// 返回: 新创建的订单ID
 		Order order = new Order();
-		order.setStatus(Status.Completed);
+		order.setStatus(Status.pending);
 		order.setAddress(address);
 		order.setCreateTime(new Date());
 		order.setTotal(cart.getTotal());
 		order.setUser(cart.getUser());
 		
-		Integer orderId = orderMapper.save(order);
-		order = orderMapper.findById(orderId);
+		orderMapper.save(order);
 		
 		List<CartItem> cartItemList = cartItemMapper.findByCartId(cart.getId());
 		List<OrderItem> orderItemList = new ArrayList<OrderItem>();
@@ -64,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		MybatisUtlils.getSqlSession().commit();
 		
-		return orderId;
+		return order.getId();
 	}
 
 	@Override

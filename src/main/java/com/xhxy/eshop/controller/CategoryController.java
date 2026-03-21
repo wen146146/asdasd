@@ -8,8 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.xhxy.eshop.entity.Category;
 import com.xhxy.eshop.entity.Product;
@@ -24,7 +24,7 @@ import com.xhxy.eshop.service.impl.mybatis.ProductServiceImpl;
 // 功能: 1.展示指定分类的商品 2.展示全部分类的商品 3.搜索商品
 @WebServlet("/category")
 public class CategoryController extends BaseServlet {
-	//private static final Logger logger = LogManager.getLogger(CategoryController.class);
+	private static final Logger logger = LogManager.getLogger(CategoryController.class);
 	private static final long serialVersionUID = 1L;
 	
 	private CategoryService categoryService = new CategoryServiceImpl();
@@ -71,16 +71,16 @@ public class CategoryController extends BaseServlet {
 	//             ProductService.findAll() -> 查询所有商品
 	public String all(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Category> topCategoryList = categoryService.findTopCategory();
-				
+		for (Category category : topCategoryList){
+			category.setChildren(categoryService.findChildCategory(category.getId()));
+		}
 		List<Product> productList = productService.findAll();
-				
 		request.setAttribute("topCategoryList", topCategoryList);
 		request.setAttribute("productList", productList);
 
-//		logger.info("全部分类页面 - 顶层分类数量: {}, 商品数量: {}",
-//				topCategoryList != null ? topCategoryList.size() : 0,
-//				productList != null ? productList.size() : 0);
-			
+		logger.info("全部分类页面 - 顶层分类数量: {}, 商品数量: {}",
+				topCategoryList != null ? topCategoryList.size() : 0,
+				productList != null ? productList.size() : 0);
 		return "category.jsp";
 	}	
 	

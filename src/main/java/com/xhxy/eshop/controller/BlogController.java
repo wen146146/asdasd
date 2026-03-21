@@ -43,9 +43,13 @@ public class BlogController  extends BaseServlet {
 	// 参数: id（请求参数）- 文章ID
 	// 返回页面: blog-detail.jsp
 	// 数据库操作: BlogService.findByBlogId() -> 根据ID查询文章
+	//             CommentService.findByBlogId() -> 根据文章ID查询评论列表
 	public String detail(HttpServletRequest request, HttpServletResponse response) {
 		Integer blogId = Integer.parseInt(request.getParameter("id"));
 		Blog blog = blogService.findByBlogId(blogId);
+		
+		List<Comment> commentList = commentService.findByBlogId(blogId);
+		blog.setCommentList(commentList);
 		
 		request.setAttribute("blog", blog);
 		return "blog-detail.jsp";

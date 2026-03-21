@@ -13,4 +13,5 @@ public interface CategoryService {
 	
 	// 获取顶层分类项
 	public List<Category> findTopCategory();
+	public List<Category> findChildCategory(Integer id);
 }

@@ -3,13 +3,44 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xhxy.eshop.mapper.CartMapper">
-	<select id="findByUserId" resultType="com.xhxy.eshop.entity.Cart">
-		select id, total from cart where user_id = #{userId}
+	<resultMap id="CartResultMap" type="com.xhxy.eshop.entity.Cart">
+		<id property="id" column="id"/>
+		<result property="total" column="total"/>
+		<association property="user" javaType="com.xhxy.eshop.entity.User">
+			<id property="id" column="user_id"/>
+		</association>
+		<collection property="cartItemList" ofType="com.xhxy.eshop.entity.CartItem">
+			<id property="id" column="item_id"/>
+			<result property="quantity" column="quantity"/>
+			<result property="total" column="item_total"/>
+			<association property="product" javaType="com.xhxy.eshop.entity.Product">
+				<id property="id" column="product_id"/>
+				<result property="name" column="product_name"/>
+				<result property="price" column="product_price"/>
+				<result property="pic" column="product_pic"/>
+			</association>
+		</collection>
+	</resultMap>
+	
+	<select id="findByUserId" resultMap="CartResultMap">
+		select c.id, c.total, c.user_id,
+		       ci.id as item_id, ci.quantity, ci.total as item_total,
+		       p.id as product_id, p.name as product_name, p.price as product_price, p.pic as product_pic
+		from cart c
+		left join cartitem ci on c.id = ci.cart_id
+		left join product p on ci.product_id = p.id
+		where c.user_id = #{userId}
 	</select>
-	<select id="findById" resultType="com.xhxy.eshop.entity.Cart">
-		select id, total from cart where id = #{id}
+	<select id="findById" resultMap="CartResultMap">
+		select c.id, c.total, c.user_id,
+		       ci.id as item_id, ci.quantity, ci.total as item_total,
+		       p.id as product_id, p.name as product_name, p.price as product_price, p.pic as product_pic
+		from cart c
+		left join cartitem ci on c.id = ci.cart_id
+		left join product p on ci.product_id = p.id
+		where c.id = #{id}
 	</select>
-	<insert id="add" parameterType="com.xhxy.eshop.entity.Cart">
+	<insert id="add">
 		insert into cart(user_id) values(#{userId})
 	</insert>
 	<update id="updateTotal">

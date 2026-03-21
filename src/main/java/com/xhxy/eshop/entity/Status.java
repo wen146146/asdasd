@@ -1,11 +1,11 @@
 package com.xhxy.eshop.entity;
 
 public enum Status {
-	paid("已付款",1),		// 已付款
-	pending("待处理",2),		// 待处理
-	processing("处理中",3),	// 处理中
-	received("已签收",4),	// 已签收
-	Completed("已完成",5);	// 已完成
+	paid("已付款",0),		// 已付款
+	pending("待处理",1),		// 待处理
+	processing("处理中",2),	// 处理中
+	received("已签收",3),	// 已签收
+	Completed("已完成",4);	// 已完成
 	
 	
 	private String name;

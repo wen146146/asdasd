@@ -3,16 +3,56 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xhxy.eshop.mapper.OrderMapper">
-	<select id="getByUserId" resultType="com.xhxy.eshop.entity.Order">
-		select id, user_id, address_id, total, status, createtime from orders where user_id = #{userId}
+	<resultMap id="OrderResultMap" type="com.xhxy.eshop.entity.Order">
+		<id property="id" column="id"/>
+		<result property="total" column="total"/>
+		<result property="createTime" column="createtime"/>
+		<result property="status" column="status" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+		<association property="user" javaType="com.xhxy.eshop.entity.User">
+			<id property="id" column="user_id"/>
+		</association>
+		<association property="address" javaType="com.xhxy.eshop.entity.Address">
+			<id property="id" column="address_id"/>
+			<result property="consigneeAddress" column="consignee_address"/>
+		</association>
+		<collection property="orderItemList" ofType="com.xhxy.eshop.entity.OrderItem">
+			<id property="id" column="item_id"/>
+			<result property="quantity" column="quantity"/>
+			<result property="total" column="item_total"/>
+			<association property="product" javaType="com.xhxy.eshop.entity.Product">
+				<id property="id" column="product_id"/>
+				<result property="name" column="product_name"/>
+				<result property="price" column="product_price"/>
+			</association>
+		</collection>
+	</resultMap>
+	
+	<select id="getByUserId" resultMap="OrderResultMap">
+		select o.id, o.user_id, o.address_id, o.total, o.status, o.createtime,
+		       a.consigneeAddress,
+		       oi.id as item_id, oi.quantity, oi.total as item_total,
+		       p.id as product_id, p.name as product_name, p.price as product_price
+		from orders o
+		left join address a on o.address_id = a.id
+		left join orderitem oi on o.id = oi.order_id
+		left join product p on oi.product_id = p.id
+		where o.user_id = #{userId}
 	</select>
-	<select id="findById" resultType="com.xhxy.eshop.entity.Order">
-		select id, user_id, address_id, total, status, createtime from orders where id = #{orderId}
+	<select id="findById" resultMap="OrderResultMap">
+		select o.id, o.user_id, o.address_id, o.total, o.status, o.createtime,
+		       a.consigneeAddress,
+		       oi.id as item_id, oi.quantity, oi.total as item_total,
+		       p.id as product_id, p.name as product_name, p.price as product_price
+		from orders o
+		left join address a on o.address_id = a.id
+		left join orderitem oi on o.id = oi.order_id
+		left join product p on oi.product_id = p.id
+		where o.id = #{orderId}
 	</select>
 	<insert id="saveFromCart">
-		insert into orders(user_id,address_id,total,status,createtime) values(#{cart.user.id},#{address.id},#{cart.total},'pending',now())
+		insert into orders(user_id,address_id,total,status,createtime) values(#{cart.user.id},#{address.id},#{cart.total},1,now())
 	</insert>
-	<insert id="save" parameterType="com.xhxy.eshop.entity.Order">
-		insert into orders(user_id,total,address_id,status,createtime) values(#{user.id},#{total},#{address.id},#{status},#{createTime})
+	<insert id="save" parameterType="com.xhxy.eshop.entity.Order" useGeneratedKeys="true" keyProperty="id">
+		insert into orders(user_id,total,address_id,status,createtime) values(#{user.id},#{total},#{address.id},#{status.index},#{createTime})
 	</insert>
 </mapper>

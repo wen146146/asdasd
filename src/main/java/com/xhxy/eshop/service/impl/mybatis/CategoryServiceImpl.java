@@ -34,4 +34,10 @@ public class CategoryServiceImpl implements CategoryService {
 		// 返回: 顶级分类列表（一级分类）
 		return categoryMapper.findTopCategory();
 	}
+	public List<Category> findChildCategory(Integer id){
+		// 数据库操作: SELECT * FROM category WHERE parent_id IS NULL
+		// 参数: 父类id
+		// 返回: 低级分类列表（一级分类）
+		return categoryMapper.findChildCategory(id);
+	}
 }
