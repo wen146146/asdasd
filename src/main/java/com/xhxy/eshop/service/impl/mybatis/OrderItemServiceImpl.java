@@ -9,14 +9,16 @@ import com.xhxy.eshop.util.MybatisUtlils;
 
 public class OrderItemServiceImpl implements OrderItemService {
 
-	private OrderItemMapper orderItemMapper = MybatisUtlils.getSqlSession().getMapper(OrderItemMapper.class);
+	private OrderItemMapper getOrderItemMapper() {
+		return MybatisUtlils.getSqlSession().getMapper(OrderItemMapper.class);
+	}
 	
 	@Override
 	public List<OrderItem> findByOrderId(Integer orderId) {
 		// 数据库操作: SELECT * FROM order_item WHERE order_id = ?
 		// 参数: orderId - 订单ID
 		// 返回: 订单项列表
-		return orderItemMapper.findByOrderId(orderId);
+		return getOrderItemMapper().findByOrderId(orderId);
 	}
 
 	@Override
@@ -24,8 +26,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 		// 数据库操作: INSERT INTO order_item (...)
 		// 参数: orderItem - 订单项对象（需包含订单ID、商品、数量、总价等）
 		// 返回: 受影响的行数（成功返回1）
-		int result = orderItemMapper.save(orderItem);
-		MybatisUtlils.getSqlSession().commit();
+		int result = getOrderItemMapper().save(orderItem);
 		return result;
 	}
 }

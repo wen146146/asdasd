@@ -9,14 +9,16 @@ import com.xhxy.eshop.util.MybatisUtlils;
 
 public class AddressServiceImpl implements AddressService {
 
-	private AddressMapper addressMapper = MybatisUtlils.getSqlSession().getMapper(AddressMapper.class);
+	private AddressMapper getAddressMapper() {
+		return MybatisUtlils.getSqlSession().getMapper(AddressMapper.class);
+	}
 	
 	@Override
 	public List<Address> findByUserId(Integer userId) {
 		// 数据库操作: SELECT * FROM address WHERE user_id = ?
 		// 参数: userId - 用户ID
 		// 返回: 该用户的所有地址列表
-		return addressMapper.findByUserId(userId);
+		return getAddressMapper().findByUserId(userId);
 	}
 	
 	@Override
@@ -24,7 +26,7 @@ public class AddressServiceImpl implements AddressService {
 		// 数据库操作: SELECT * FROM address WHERE id = ?
 		// 参数: id - 地址ID
 		// 返回: 地址对象，找不到返回null
-		return addressMapper.findById(id);
+		return getAddressMapper().findById(id);
 	}
 	
 	@Override
@@ -32,28 +34,25 @@ public class AddressServiceImpl implements AddressService {
 		// 数据库操作: INSERT INTO address (...)
 		// 参数: address - 地址对象（需包含用户ID、收货人、手机、地址等信息）
 		// 返回: 受影响的行数（成功返回1）
-		int result = addressMapper.add(address);
-		MybatisUtlils.getSqlSession().commit();
+		int result = getAddressMapper().add(address);
 		return result;
 	}
-	
+
 	@Override
 	public int update(Address address) {
 		// 数据库操作: UPDATE address SET ... WHERE id = ?
 		// 参数: address - 地址对象（需包含ID和要修改的字段）
 		// 返回: 受影响的行数（成功返回1）
-		int result = addressMapper.update(address);
-		MybatisUtlils.getSqlSession().commit();
+		int result = getAddressMapper().update(address);
 		return result;
 	}
-	
+
 	@Override
 	public int delete(Integer id) {
 		// 数据库操作: DELETE FROM address WHERE id = ?
 		// 参数: id - 地址ID
 		// 返回: 受影响的行数（成功返回1）
-		int result = addressMapper.delete(id);
-		MybatisUtlils.getSqlSession().commit();
+		int result = getAddressMapper().delete(id);
 		return result;
 	}
 }

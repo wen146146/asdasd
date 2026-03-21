@@ -64,7 +64,7 @@ public class CartController extends BaseServlet {
 		
 		cartService.add(product, 1, cart.getId());
 		
-		return "cart?method=view";
+		return "r:/cart?method=view";
 	}
 	
 	// 删除购物车商品（尚未实现）

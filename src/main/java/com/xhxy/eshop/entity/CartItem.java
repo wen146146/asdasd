@@ -1,11 +1,14 @@
 package com.xhxy.eshop.entity;
 
+import java.io.Serializable;
+
 /**
  * 
  * 实体类：购物项
  *
  */
-public class CartItem {
+public class CartItem implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Product product;	// 所购商品
 	private Integer quantity;	// 购物数量

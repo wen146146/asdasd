@@ -19,10 +19,21 @@ import com.xhxy.eshop.util.MybatisUtlils;
 
 public class OrderServiceImpl implements OrderService {
 
-	private OrderMapper orderMapper = MybatisUtlils.getSqlSession().getMapper(OrderMapper.class);
-	private OrderItemMapper orderItemMapper = MybatisUtlils.getSqlSession().getMapper(OrderItemMapper.class);
-	private CartMapper cartMapper = MybatisUtlils.getSqlSession().getMapper(CartMapper.class);
-	private CartItemMapper cartItemMapper = MybatisUtlils.getSqlSession().getMapper(CartItemMapper.class);
+	private OrderMapper getOrderMapper() {
+		return MybatisUtlils.getSqlSession().getMapper(OrderMapper.class);
+	}
+	
+	private OrderItemMapper getOrderItemMapper() {
+		return MybatisUtlils.getSqlSession().getMapper(OrderItemMapper.class);
+	}
+	
+	private CartMapper getCartMapper() {
+		return MybatisUtlils.getSqlSession().getMapper(CartMapper.class);
+	}
+	
+	private CartItemMapper getCartItemMapper() {
+		return MybatisUtlils.getSqlSession().getMapper(CartItemMapper.class);
+	}
 
 	@Override
 	public Integer createOrder(Cart cart, Address address) {
@@ -41,9 +52,9 @@ public class OrderServiceImpl implements OrderService {
 		order.setTotal(cart.getTotal());
 		order.setUser(cart.getUser());
 		
-		orderMapper.save(order);
+		getOrderMapper().save(order);
 		
-		List<CartItem> cartItemList = cartItemMapper.findByCartId(cart.getId());
+		List<CartItem> cartItemList = getCartItemMapper().findByCartId(cart.getId());
 		List<OrderItem> orderItemList = new ArrayList<OrderItem>();
 		
 		for(CartItem cartItem : cartItemList) {
@@ -55,12 +66,10 @@ public class OrderServiceImpl implements OrderService {
 			orderItemList.add(orderItem);
 		}
 		
-		orderItemMapper.batchSave(orderItemList);
+		getOrderItemMapper().batchSave(orderItemList);
 		
-		cartItemMapper.deleteByCartId(cart.getId());
-		cartMapper.updateTotal(cart.getId(), 0.0F);
-		
-		MybatisUtlils.getSqlSession().commit();
+		getCartItemMapper().deleteByCartId(cart.getId());
+		getCartMapper().updateTotal(cart.getId(), 0.0F);
 		
 		return order.getId();
 	}
@@ -70,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
 		// 数据库操作: SELECT * FROM order WHERE user_id = ?
 		// 参数: userId - 用户ID
 		// 返回: 该用户的所有订单列表
-		return orderMapper.getByUserId(userId);
+		return getOrderMapper().getByUserId(userId);
 	}
 
 	@Override
@@ -78,6 +87,6 @@ public class OrderServiceImpl implements OrderService {
 		// 数据库操作: SELECT * FROM order WHERE id = ?
 		// 参数: orderId - 订单ID
 		// 返回: 订单对象，找不到返回null
-		return orderMapper.findById(orderId);
+		return getOrderMapper().findById(orderId);
 	}
 }

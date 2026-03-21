@@ -3,6 +3,7 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xhxy.eshop.mapper.UserMapper">
+	<cache/>
 	<!-- <insert id="addUser" parameterType="com.xhxy.eshop.entity.User" >
 		insert into user(username,password,phone,email,avatar) values(#{username},#{password},#{phone},#{email},#{avatar})
 	</insert> -->

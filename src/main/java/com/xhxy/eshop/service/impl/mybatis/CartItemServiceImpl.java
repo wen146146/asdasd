@@ -9,13 +9,15 @@ import com.xhxy.eshop.util.MybatisUtlils;
 
 public class CartItemServiceImpl implements CartItemService {
 
-	private CartItemMapper cartItemMapper = MybatisUtlils.getSqlSession().getMapper(CartItemMapper.class);
+	private CartItemMapper getCartItemMapper() {
+		return MybatisUtlils.getSqlSession().getMapper(CartItemMapper.class);
+	}
 	
 	@Override
 	public List<CartItem> findByCartId(Integer cartId) {
 		// 数据库操作: SELECT * FROM cart_item WHERE cart_id = ?
 		// 参数: cartId - 购物车ID
 		// 返回: 购物车项列表
-		return cartItemMapper.findByCartId(cartId);
+		return getCartItemMapper().findByCartId(cartId);
 	}
 }

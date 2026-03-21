@@ -1,10 +1,13 @@
 package com.xhxy.eshop.entity;
 
+import java.io.Serializable;
+
 /**
  * 实体类：地址
  *
  */
-public class Address {
+public class Address implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String consigneeName;			// 收货人
 	private String consigneeAddress;		// 收货地址

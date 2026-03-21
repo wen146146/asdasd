@@ -1,10 +1,14 @@
 package com.xhxy.eshop.entity;
+
+import java.io.Serializable;
+
 /**
  * 
  * 实体类：订单项
  *
  */
-public class OrderItem {
+public class OrderItem implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Product product;	// 所定商品
 	private Integer quantity;	// 商品数量

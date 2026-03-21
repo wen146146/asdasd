@@ -8,8 +8,13 @@ import com.xhxy.eshop.util.MybatisUtlils;
 
 public class UserServiceImpl implements UserService {
 
-	private UserMapper userMapper = MybatisUtlils.getSqlSession().getMapper(UserMapper.class);
-	private CartMapper cartMapper = MybatisUtlils.getSqlSession().getMapper(CartMapper.class);
+	private UserMapper getUserMapper() {
+		return MybatisUtlils.getSqlSession().getMapper(UserMapper.class);
+	}
+	
+	private CartMapper getCartMapper() {
+		return MybatisUtlils.getSqlSession().getMapper(CartMapper.class);
+	}
 	//getMapper(CartMapper.class)就是我写的接口调用，如果没有写这个，那只能写地址指定对应的xml文件来处理
 	@Override
 	public Integer addUser(User user) {
@@ -18,9 +23,8 @@ public class UserServiceImpl implements UserService {
 		//   2. INSERT INTO cart (user_id) - 为用户创建购物车
 		// 参数: user - 用户对象（需包含用户名、密码、邮箱等）
 		// 返回: 1（成功）
-		Integer userId = userMapper.addUser(user);
-		cartMapper.add(user.getId());
-		MybatisUtlils.getSqlSession().commit();
+		Integer userId = getUserMapper().addUser(user);
+		getCartMapper().add(user.getId());
 		return 1;
 	}
 
@@ -29,7 +33,7 @@ public class UserServiceImpl implements UserService {
 		// 数据库操作: SELECT COUNT(*) FROM user WHERE username = ? AND password = ?
 		// 参数: username - 用户名, password - 密码
 		// 返回: 用户ID（登录成功），0（登录失败）
-		return userMapper.login(username, password);
+		return getUserMapper().login(username, password);
 	}
 
 	@Override
@@ -37,7 +41,7 @@ public class UserServiceImpl implements UserService {
 		// 数据库操作: SELECT * FROM user WHERE id = ?
 		// 参数: id - 用户ID
 		// 返回: 用户对象，找不到返回null
-		return userMapper.findById(id);
+		return getUserMapper().findById(id);
 	}
 
 	@Override
@@ -45,8 +49,7 @@ public class UserServiceImpl implements UserService {
 		// 数据库操作: UPDATE user SET ... WHERE id = ?
 		// 参数: user - 用户对象（需包含ID和要修改的字段）
 		// 返回: 受影响的行数（成功返回1）
-		int result = userMapper.update(user);
-		MybatisUtlils.getSqlSession().commit();
+		int result = getUserMapper().update(user);
 		return result;
 	}
 	@Override
@@ -54,6 +57,6 @@ public class UserServiceImpl implements UserService {
 		// 数据库操作: SELECT password FROM user WHERE id = ?
 		// 参数: id - 用户ID
 		// 返回: 密码字符串，找不到返回null
-		return userMapper.findPasswordById(id);
+		return getUserMapper().findPasswordById(id);
 	}
 }

@@ -1,10 +1,13 @@
 package com.xhxy.eshop.entity;
 
+import java.io.Serializable;
+
 /**
  *  实体类:用户
  *  
  */
-public class User {
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String username;	// 用户名
 	private String password;	// 密码

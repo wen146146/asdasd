@@ -9,14 +9,16 @@ import java.util.List;
 
 public class FaqServiceImpl implements FaqService {
 
-	private FaqMapper faqMapper = MybatisUtlils.getSqlSession().getMapper(FaqMapper.class);
+	private FaqMapper getFaqMapper() {
+		return MybatisUtlils.getSqlSession().getMapper(FaqMapper.class);
+	}
 	
 	@Override
 	public List<Faq> findAll() {
 		// 数据库操作: SELECT * FROM faq
 		// 参数: 无
 		// 返回: 所有常见问题列表
-		return faqMapper.findAll();
+		return getFaqMapper().findAll();
 	}
 
 }

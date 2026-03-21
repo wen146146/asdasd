@@ -9,15 +9,48 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class MybatisUtlils {
-    public static SqlSession getSqlSession() {
-        String resource = "mybatis-config.xml";
+    private static SqlSessionFactory sqlSessionFactory;
+    
+    static {
         try {
+            String resource = "mybatis-config.xml";
             InputStream is = Resources.getResourceAsStream(resource);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(is);
-            return sqlSessionFactory.openSession(true);
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(is);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+    }
+    
+    private static final ThreadLocal<SqlSession> threadLocal = new ThreadLocal<>();
+    
+    public static SqlSession getSqlSession() {
+        SqlSession session = threadLocal.get();
+        if (session == null) {
+            session = sqlSessionFactory.openSession(false);  // 手动提交事务
+            threadLocal.set(session);
+        }
+        return session;
+    }
+    
+    public static void commit() {
+        SqlSession session = threadLocal.get();
+        if (session != null) {
+            session.commit();
+        }
+    }
+    
+    public static void rollback() {
+        SqlSession session = threadLocal.get();
+        if (session != null) {
+            session.rollback();
+        }
+    }
+    
+    public static void close() {
+        SqlSession session = threadLocal.get();
+        if (session != null) {
+            session.close();
+            threadLocal.remove();
+        }
     }
 }

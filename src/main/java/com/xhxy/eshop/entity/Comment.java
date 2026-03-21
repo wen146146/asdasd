@@ -1,12 +1,14 @@
 package com.xhxy.eshop.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 实体类：文章评论
  *
  */
-public class Comment {
+public class Comment implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String content;		// 内容
 	private Date createTime;	// 创建时间

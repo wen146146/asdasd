@@ -1,5 +1,6 @@
 package com.xhxy.eshop.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,11 +8,12 @@ import java.util.List;
  * 实体类：购物车
  *
  */
-public class Cart {
+public class Cart implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private float total;				// 总额
-	private List<CartItem> cartItemList;	// 购物车中的购物项
-	private User user;					// 购物车对应的用户对象
+	private float total;// 总额
+	private List<CartItem> cartItemList;// 购物车中的购物项
+	private User user;// 购物车对应的用户对象
 	
 	// ----- getter/setter ------
 	public Integer getId() {

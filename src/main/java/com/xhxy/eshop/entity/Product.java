@@ -1,12 +1,14 @@
 package com.xhxy.eshop.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 实体类：商品
  *
  */
-public class Product {
+public class Product implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String name;		// 商品名称
 	private Float price;		// 商品价格
@@ -21,7 +23,7 @@ public class Product {
 	
 	private Category category;	// 商品所属分类
 	private List<Picture> pictureList;// 商品的所有图片
-	private List<Evaluation> evaluationList;	// 对商品的所有评价
+	private List<Evaluation> evaluationList;// 对商品的所有评价
 
 	// getter和setter
 	public Integer getId() {

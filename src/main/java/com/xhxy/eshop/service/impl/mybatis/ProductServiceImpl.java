@@ -9,14 +9,16 @@ import com.xhxy.eshop.util.MybatisUtlils;
 
 public class ProductServiceImpl implements ProductService {
 	
-	private ProductMapper productMapper = MybatisUtlils.getSqlSession().getMapper(ProductMapper.class);
+	private ProductMapper getProductMapper() {
+		return MybatisUtlils.getSqlSession().getMapper(ProductMapper.class);
+	}
 	
 	@Override
 	public Product findById(Integer id) {
 		// 数据库操作: SELECT * FROM product WHERE id = ?
 		// 参数: id - 商品ID
 		// 返回: 商品对象，找不到返回null
-		return productMapper.findById(id);
+		return getProductMapper().findById(id);
 	}
 
 	@Override
@@ -24,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
 		// 数据库操作: SELECT * FROM product WHERE category_id = ?
 		// 参数: categoryId - 分类ID
 		// 返回: 该分类下的商品列表
-		return productMapper.findListByCategoryId(categoryId);
+		return getProductMapper().findListByCategoryId(categoryId);
 	}
 
 	@Override
@@ -32,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
 		// 数据库操作: SELECT * FROM product
 		// 参数: 无
 		// 返回: 所有商品列表
-		return productMapper.findAll();
+		return getProductMapper().findAll();
 	}
 
 	@Override
@@ -40,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
 		// 数据库操作: SELECT * FROM product ORDER BY view_count DESC LIMIT ?
 		// 参数: n - 查询热门商品的数量
 		// 返回: 热门商品列表
-		return productMapper.findHot(n);
+		return getProductMapper().findHot(n);
 	}
 
 	@Override
@@ -48,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 		// 数据库操作: SELECT * FROM product ORDER BY create_time DESC LIMIT ?
 		// 参数: n - 查询最新商品的数量
 		// 返回: 最新商品列表
-		return productMapper.findLatest(n);
+		return getProductMapper().findLatest(n);
 	}
 
 	@Override
@@ -56,6 +58,6 @@ public class ProductServiceImpl implements ProductService {
 		// 数据库操作: 多条件模糊查询商品
 		// 参数: name - 商品名, brief - 简介, detail - 详情
 		// 返回: 符合条件的商品列表
-		return productMapper.findByKeywords(name, brief, detail);
+		return getProductMapper().findByKeywords(name, brief, detail);
 	}
 }

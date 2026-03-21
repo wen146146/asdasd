@@ -12,15 +12,20 @@ import com.xhxy.eshop.util.MybatisUtlils;
 
 public class CartServiceImpl implements CartService {
 
-	private CartMapper cartMapper = MybatisUtlils.getSqlSession().getMapper(CartMapper.class);
-	private CartItemMapper cartItemMapper = MybatisUtlils.getSqlSession().getMapper(CartItemMapper.class);
+	private CartMapper getCartMapper() {
+		return MybatisUtlils.getSqlSession().getMapper(CartMapper.class);
+	}
+	
+	private CartItemMapper getCartItemMapper() {
+		return MybatisUtlils.getSqlSession().getMapper(CartItemMapper.class);
+	}
 	
 	@Override
 	public Cart findByUserId(Integer userId) {
 		// 数据库操作: SELECT * FROM cart WHERE user_id = ?
 		// 参数: userId - 用户ID
 		// 返回: 购物车对象，找不到返回null
-		return cartMapper.findByUserId(userId);
+		return getCartMapper().findByUserId(userId);
 	}
 	
 	@Override
@@ -28,8 +33,7 @@ public class CartServiceImpl implements CartService {
 		// 数据库操作: INSERT INTO cart (user_id) VALUES (?)
 		// 参数: userId - 用户ID
 		// 返回: 成功返回true
-		cartMapper.add(userId);
-		MybatisUtlils.getSqlSession().commit();
+		getCartMapper().add(userId);
 		return true;
 	}
 
@@ -38,9 +42,8 @@ public class CartServiceImpl implements CartService {
 		// 数据库操作: DELETE FROM cart_item WHERE cart_id = ? + UPDATE cart SET total = 0 WHERE id = ?
 		// 参数: cartId - 购物车ID
 		// 返回: 成功返回true
-		cartItemMapper.deleteByCartId(cartId);
-		cartMapper.updateTotal(cartId, 0.0F);
-		MybatisUtlils.getSqlSession().commit();
+		getCartItemMapper().deleteByCartId(cartId);
+		getCartMapper().updateTotal(cartId, 0.0F);
 		return true;
 	}
 
@@ -54,25 +57,24 @@ public class CartServiceImpl implements CartService {
 		// 参数: product - 商品对象, quantity - 数量, cartId - 购物车ID
 		// 返回: 成功返回true
 		Integer productId = product.getId();
-		Integer cartItemId = cartItemMapper.findByCartIdAndProductId(cartId, productId);
+		Integer cartItemId = getCartItemMapper().findByCartIdAndProductId(cartId, productId);
 		
 		if(cartItemId != null && cartItemId > 0) {
-			CartItem cartItem = cartItemMapper.findById(cartItemId);
+			CartItem cartItem = getCartItemMapper().findById(cartItemId);
 			quantity = quantity + cartItem.getQuantity();
 			Float total = cartItem.getProduct().getPrice() * quantity;
-			cartItemMapper.update(cartItemId, quantity, total);
+			getCartItemMapper().update(cartItemId, quantity, total);
 		}else {
 			Float total = product.getPrice() * quantity;
-			cartItemMapper.add(product, quantity, total, cartId);
+			getCartItemMapper().add(product, quantity, total, cartId);
 		}
 		
-		List<CartItem> cartItemList = cartItemMapper.findByCartId(cartId);
+		List<CartItem> cartItemList = getCartItemMapper().findByCartId(cartId);
 		Float cartTotal = 0.0F;
 		for(CartItem cartItem : cartItemList) {
 			cartTotal = cartTotal + cartItem.getTotal();
 		}
-		cartMapper.updateTotal(cartId, cartTotal);
-		MybatisUtlils.getSqlSession().commit();
+		getCartMapper().updateTotal(cartId, cartTotal);
 		return true;
 	}
 }

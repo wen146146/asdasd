@@ -1,12 +1,14 @@
 package com.xhxy.eshop.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 实体类：商品分类
  *
  */
-public class Category {
+public class Category implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String name;	// 分类名称
 	private int grade;		// 分类的层级：顶层为0，第2层为1

@@ -1,5 +1,6 @@
 package com.xhxy.eshop.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +9,8 @@ import java.util.List;
  * 实体类：订单
  *
  */
-public class Order {
+public class Order implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Status status;		// 状态
 	private Date createTime;	// 生成时间

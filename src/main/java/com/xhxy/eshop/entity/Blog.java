@@ -1,5 +1,6 @@
 package com.xhxy.eshop.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +8,8 @@ import java.util.List;
  * 实体类：推荐文章
  *
  */
-public class Blog {
+public class Blog implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String title;		// 标题
 	private String pic;			// 标题图片
@@ -15,7 +17,7 @@ public class Blog {
 	private Date createTime;	// 创建时间
 	
 	private Admin admin;		// 发布文章的管理员
-	private List<Comment> commentList;	// 评论集
+	private List<Comment> commentList;// 评论集
 
 	// getter和setter
 	public Integer getId() {

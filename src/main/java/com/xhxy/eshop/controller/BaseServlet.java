@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.xhxy.eshop.service.CategoryService;
 import com.xhxy.eshop.service.impl.mybatis.CategoryServiceImpl;
+import com.xhxy.eshop.util.MybatisUtlils;
 
 // BaseServlet: 所有Controller（Servlet）的父类
 // 功能: 1.解析请求的method参数，根据参数值调用对应的Controller方法
@@ -80,8 +81,16 @@ public class BaseServlet extends HttpServlet {
 					}
 				}
 			}
+			
+			// 提交事务
+			MybatisUtlils.commit();
 		} catch (Exception e) {
+			// 回滚事务
+			MybatisUtlils.rollback();
 			throw new RuntimeException(e);
+		} finally {
+			// 关闭SqlSession
+			MybatisUtlils.close();
 		}
 	}
 }

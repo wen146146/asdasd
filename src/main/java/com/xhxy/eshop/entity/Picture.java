@@ -1,10 +1,13 @@
 package com.xhxy.eshop.entity;
 
+import java.io.Serializable;
+
 /**
  * 实体类：商品图片
  *
  */
-public class Picture {
+public class Picture implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String file;  // 文件地址
 	

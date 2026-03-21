@@ -1,9 +1,13 @@
 package com.xhxy.eshop.entity;
+
+import java.io.Serializable;
+
 /**
  * 实体类：常见问题
  *
  */
-public class Faq {
+public class Faq implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String question;	// 问题
 	private String answer;		// 回答

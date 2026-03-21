@@ -62,6 +62,6 @@ public class OrderController extends BaseServlet {
 		
 		orderService.createOrder(cart, address); 
 		
-		return "/order-complete.jsp";
+		return "r:/order-complete.jsp";
 	}
 }

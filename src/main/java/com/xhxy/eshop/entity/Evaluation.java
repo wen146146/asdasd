@@ -1,12 +1,14 @@
 package com.xhxy.eshop.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 实体类：商品评价
  *
  */
-public class Evaluation {
+public class Evaluation implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String content;		// 内容
 	private Date createTime;	// 评价时间

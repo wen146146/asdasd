@@ -9,14 +9,16 @@ import com.xhxy.eshop.util.MybatisUtlils;
 
 public class CategoryServiceImpl implements CategoryService {
 
-	private CategoryMapper categoryMapper = MybatisUtlils.getSqlSession().getMapper(CategoryMapper.class);
+	private CategoryMapper getCategoryMapper() {
+		return MybatisUtlils.getSqlSession().getMapper(CategoryMapper.class);
+	}
 	
 	@Override
 	public Category findById(Integer id) {
 		// 数据库操作: SELECT * FROM category WHERE id = ?
 		// 参数: id - 分类ID
 		// 返回: 分类对象，找不到返回null
-		return categoryMapper.findById(id);
+		return getCategoryMapper().findById(id);
 	}
 
 	@Override
@@ -24,7 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
 		// 数据库操作: SELECT * FROM category
 		// 参数: 无
 		// 返回: 所有分类列表
-		return categoryMapper.findAll();
+		return getCategoryMapper().findAll();
 	}
 
 	@Override
@@ -32,12 +34,12 @@ public class CategoryServiceImpl implements CategoryService {
 		// 数据库操作: SELECT * FROM category WHERE parent_id IS NULL
 		// 参数: 无
 		// 返回: 顶级分类列表（一级分类）
-		return categoryMapper.findTopCategory();
+		return getCategoryMapper().findTopCategory();
 	}
 	public List<Category> findChildCategory(Integer id){
 		// 数据库操作: SELECT * FROM category WHERE parent_id IS NULL
 		// 参数: 父类id
 		// 返回: 低级分类列表（一级分类）
-		return categoryMapper.findChildCategory(id);
+		return getCategoryMapper().findChildCategory(id);
 	}
 }

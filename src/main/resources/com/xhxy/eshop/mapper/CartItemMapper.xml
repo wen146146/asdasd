@@ -3,6 +3,7 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xhxy.eshop.mapper.CartItemMapper">
+	<cache/>
 	<resultMap id="CartItemResultMap" type="com.xhxy.eshop.entity.CartItem">
 		<id property="id" column="id"/>
 		<result property="quantity" column="quantity"/>
