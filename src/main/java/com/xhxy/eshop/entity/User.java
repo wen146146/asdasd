@@ -11,6 +11,7 @@ public class User {
 	private String email;		// 邮箱
 	private String phone;		// 手机号码
 	private String avatar;		// 头像文件的路径
+	private String department;	// 所属部门（用于管理员）
 	
 	// getter和setter
 	public Integer getId() {
@@ -49,6 +50,11 @@ public class User {
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
-	
+	public String getDepartment() {
+		return department;
+	}
+	public void setDepartment(String department) {
+		this.department = department;
+	}
 	
 }

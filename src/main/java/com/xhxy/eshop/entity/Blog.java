@@ -14,6 +14,7 @@ public class Blog {
 	private String content;		// 正文
 	private Date createTime;	// 创建时间
 	
+	private Admin admin;		// 发布文章的管理员
 	private List<Comment> commentList;	// 评论集
 
 	// getter和setter
@@ -63,5 +64,13 @@ public class Blog {
 	public void setCommentList(List<Comment> commentList) {
 		this.commentList = commentList;
 	}
-	
+
+	public Admin getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
+	}
+
 }

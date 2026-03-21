@@ -50,4 +50,20 @@
 		left join category c on p.category_id = c.id
 		where p.latest = 1 limit #{n}
 	</select>
+	
+	<select id="findByKeywords" resultMap="ProductResultMap">
+		select p.id, p.name, p.price, p.original_price, p.brief, p.detail, p.stock, p.pic, p.pic2, p.hot, p.latest, p.category_id, c.name as category_name
+		from product p
+		left join category c on p.category_id = c.id
+		where 1=1
+		<if test="name != null and name != ''">
+			and p.name like concat('%', #{name}, '%')
+		</if>
+		<if test="brief != null and brief != ''">
+			and p.brief like concat('%', #{brief}, '%')
+		</if>
+		<if test="detail != null and detail != ''">
+			and p.detail like concat('%', #{detail}, '%')
+		</if>
+	</select>
 </mapper>

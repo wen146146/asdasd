@@ -53,9 +53,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> findByKeywords(String name, String brief, String detail) {
-		// 数据库操作: 暂未实现
+		// 数据库操作: 多条件模糊查询商品
 		// 参数: name - 商品名, brief - 简介, detail - 详情
-		// 返回: null
-		return null;
+		// 返回: 符合条件的商品列表
+		return productMapper.findByKeywords(name, brief, detail);
 	}
 }

@@ -3,13 +3,34 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xhxy.eshop.mapper.BlogMapper">
-	<select id="findAll" resultType="com.xhxy.eshop.entity.Blog">
-		select id, title, pic, content, createtime from blog
+	<resultMap id="BlogResultMap" type="com.xhxy.eshop.entity.Blog">
+		<id property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="pic" column="pic"/>
+		<result property="content" column="content"/>
+		<result property="createTime" column="createtime"/>
+		<association property="admin" javaType="com.xhxy.eshop.entity.Admin">
+			<id property="id" column="admin_id"/>
+			<result property="username" column="admin_username"/>
+			<result property="department" column="admin_department"/>
+		</association>
+	</resultMap>
+	
+	<select id="findAll" resultMap="BlogResultMap">
+		select b.id, b.title, b.pic, b.content, b.createtime, b.admin_id, u.username as admin_username, u.department as admin_department
+		from blog b
+		left join user u on b.admin_id = u.id
 	</select>
-	<select id="findById" resultType="com.xhxy.eshop.entity.Blog">
-		select id, title, pic, content, createtime from blog where id = #{blogId}
+	<select id="findById" resultMap="BlogResultMap">
+		select b.id, b.title, b.pic, b.content, b.createtime, b.admin_id, u.username as admin_username, u.department as admin_department
+		from blog b
+		left join user u on b.admin_id = u.id
+		where b.id = #{blogId}
 	</select>
-	<select id="findLatestBlog" resultType="com.xhxy.eshop.entity.Blog">
-		select id, title, pic, content, createtime from blog order by createtime desc limit #{n}
+	<select id="findLatestBlog" resultMap="BlogResultMap">
+		select b.id, b.title, b.pic, b.content, b.createtime, b.admin_id, u.username as admin_username, u.department as admin_department
+		from blog b
+		left join user u on b.admin_id = u.id
+		order by b.createtime desc limit #{n}
 	</select>
 </mapper>

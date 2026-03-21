@@ -1,5 +1,5 @@
 package com.xhxy.eshop.mapper;
-
+import org.apache.ibatis.annotations.Param;
 import com.xhxy.eshop.entity.Product;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,4 +29,9 @@ public interface ProductMapper {
 	// 参数: n - 查询最新商品的数量
 	// 返回: 最新商品列表
 	List<Product> findLatest(Integer n);
+	
+	// 数据库操作: 多条件模糊查询商品
+	// 参数: name - 商品名称, brief - 商品简介, detail - 商品详情
+	// 返回: 符合条件的商品列表
+	List<Product> findByKeywords(@Param("name") String name, @Param("brief") String brief, @Param("detail") String detail);
 }

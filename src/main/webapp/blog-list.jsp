@@ -62,6 +62,14 @@
               <div class="card-body px-0 pb-0">
                 <h4 class="h5 font-w-5 mt-2 mb-0"> 
                 <a class="link-title" href="blog?method=detail&id=${blog.id}">${blog.title}</a> </h4>
+                <c:if test="${not empty blog.admin}">
+                  <p class="text-muted small mt-2 mb-0">
+                    <i class="las la-user-circle"></i> ${blog.admin.username} 
+                    <c:if test="${not empty blog.admin.department}">
+                      <span class="badge badge-light ml-2">${blog.admin.department}</span>
+                    </c:if>
+                  </p>
+                </c:if>
               </div>
               <div></div>
             </div>
