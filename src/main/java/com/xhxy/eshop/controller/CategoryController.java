@@ -33,24 +33,44 @@ public class CategoryController extends BaseServlet {
 	// 展示指定分类的商品
 	// 功能: 根据分类ID获取该分类下的所有商品
 	// 参数: id（请求参数）- 分类ID
+	//       page（请求参数）- 页码，默认1
+	//       size（请求参数）- 每页数量，默认6
 	// 返回页面: category.jsp
 	// 数据库操作: CategoryService.findTopCategory() -> 查询顶层分类列表
 	//             CategoryService.findById() -> 根据ID查询分类
-	//             ProductService.findListByCategoryId() -> 根据分类ID查询商品列表
+	//             ProductService.findBypage() -> 根据分类ID分页查询商品列表
+	//             ProductService.countByCategoryId() -> 查询该分类的商品总数
 	public String list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Integer id = Integer.parseInt(request.getParameter("id"));
+		
+		// 获取分页参数
+		String pageStr = request.getParameter("page");
+		String sizeStr = request.getParameter("size");
+		
+		Integer page = (pageStr != null && !pageStr.isEmpty()) ? Integer.parseInt(pageStr) : 1;
+		Integer size = (sizeStr != null && !sizeStr.isEmpty()) ? Integer.parseInt(sizeStr) : 6;
 		
 		// 查询顶层分类列表
 		List<Category> topCategoryList = categoryService.findTopCategory();
 		// 查询指定分类
 		Category category = categoryService.findById(id);
 		
-		// 查询指定分类下的商品列表
-		List<Product> productList = productService.findListByCategoryId(id);
+		// 分页查询指定分类下的商品列表
+		List<Product> productList = productService.findBypage(id, page, size);
+		
+		// 查询该分类的商品总数
+		Integer totalCount = productService.countByCategoryId(id);
+		
+		// 计算总页数
+		Integer totalPages = (totalCount + size - 1) / size;
 		
 		request.setAttribute("topCategoryList", topCategoryList);
 		request.setAttribute("category", category);
 		request.setAttribute("productList", productList);
+		request.setAttribute("currentPage", page);
+		request.setAttribute("pageSize", size);
+		request.setAttribute("totalPages", totalPages);
+		request.setAttribute("totalCount", totalCount);
 			
 		return "category.jsp";
 	}
@@ -65,22 +85,45 @@ public class CategoryController extends BaseServlet {
 	
 	// 展示全部分类的商品
 	// 功能: 获取所有商品列表
-	// 参数: 无
+	// 参数: page（请求参数）- 页码，默认1
+	//       size（请求参数）- 每页数量，默认6
 	// 返回页面: category.jsp
 	// 数据库操作: CategoryService.findTopCategory() -> 查询顶层分类列表
-	//             ProductService.findAll() -> 查询所有商品
+	//             ProductService.findBypage() -> 分页查询所有商品
+	//             ProductService.countAll() -> 查询所有商品总数
 	public String all(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 获取分页参数
+		String pageStr = request.getParameter("page");
+		String sizeStr = request.getParameter("size");
+		
+		Integer page = (pageStr != null && !pageStr.isEmpty()) ? Integer.parseInt(pageStr) : 1;
+		Integer size = (sizeStr != null && !sizeStr.isEmpty()) ? Integer.parseInt(sizeStr) : 6;
+		
 		List<Category> topCategoryList = categoryService.findTopCategory();
 		for (Category category : topCategoryList){
 			category.setChildren(categoryService.findChildCategory(category.getId()));
 		}
-		List<Product> productList = productService.findAll();
+		
+		// 分页查询所有商品（categoryId 为 null 表示查询所有）
+		List<Product> productList = productService.findBypage(null, page, size);
+		
+		// 查询所有商品总数
+		Integer totalCount = productService.countAll();
+		
+		// 计算总页数
+		Integer totalPages = (totalCount + size - 1) / size;
+		
 		request.setAttribute("topCategoryList", topCategoryList);
 		request.setAttribute("productList", productList);
+		request.setAttribute("currentPage", page);
+		request.setAttribute("pageSize", size);
+		request.setAttribute("totalPages", totalPages);
+		request.setAttribute("totalCount", totalCount);
 
-		logger.info("全部分类页面 - 顶层分类数量: {}, 商品数量: {}",
+		logger.info("全部分类页面 - 顶层分类数量: {}, 商品数量: {}, 总页数: {}",
 				topCategoryList != null ? topCategoryList.size() : 0,
-				productList != null ? productList.size() : 0);
+				totalCount,
+				totalPages);
 		return "category.jsp";
 	}	
 	

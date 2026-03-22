@@ -67,4 +67,24 @@
 			and p.detail like concat('%', #{detail}, '%')
 		</if>
 	</select>
+	
+	<select id="findBypage" resultMap="ProductResultMap">
+		select p.id, p.name, p.price, p.original_price, p.brief, p.detail, p.stock, p.pic, p.pic2, p.hot, p.latest, p.category_id, c.name as category_name
+		from product p
+		left join category c on p.category_id = c.id
+		<where>
+			<if test="categoryId != null">
+				p.category_id = #{categoryId}
+			</if>
+		</where>
+		limit #{start}, #{limit}
+	</select>
+	
+	<select id="countByCategoryId" resultType="java.lang.Integer">
+		select count(*) from product where category_id = #{categoryId}
+	</select>
+	
+	<select id="countAll" resultType="java.lang.Integer">
+		select count(*) from product
+	</select>
 </mapper>

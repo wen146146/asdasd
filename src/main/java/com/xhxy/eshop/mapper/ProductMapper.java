@@ -34,4 +34,19 @@ public interface ProductMapper {
 	// 参数: name - 商品名称, brief - 商品简介, detail - 商品详情
 	// 返回: 符合条件的商品列表
 	List<Product> findByKeywords(@Param("name") String name, @Param("brief") String brief, @Param("detail") String detail);
+	
+	// 数据库操作: 分页查询商品
+	// 参数: categoryId - 分类ID, page - 页码, size - 每页数量
+	// 返回: 分页商品列表
+	List<Product> findBypage(@Param("categoryId") Integer categoryId, @Param("page") Integer page, @Param("size") Integer size);
+	
+	// 数据库操作: 查询指定分类的商品总数
+	// 参数: categoryId - 分类ID
+	// 返回: 商品总数
+	Integer countByCategoryId(@Param("categoryId") Integer categoryId);
+	
+	// 数据库操作: 查询所有商品总数
+	// 参数: 无
+	// 返回: 商品总数
+	Integer countAll();
 }

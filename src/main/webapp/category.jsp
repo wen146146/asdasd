@@ -77,17 +77,40 @@
           </c:forEach>
 
         </div>
+        
         <nav aria-label="Page navigation">
           <ul class="pagination justify-content-end">
-            <li class="page-item"><a class="page-link" href="#" data-original-title="将在Mybatis课程实现" data-toggle="tooltip">前一页</a>
+            <li class="page-item">
+              <c:choose>
+                <c:when test="${category != null}">
+                  <a class="page-link" href="category?method=list&id=${category.id}&page=${currentPage - 1}&size=${pageSize}" ${currentPage == 1 ? 'disabled' : ''}>前一页</a>
+                </c:when>
+                <c:otherwise>
+                  <a class="page-link" href="category?method=all&page=${currentPage - 1}&size=${pageSize}" ${currentPage == 1 ? 'disabled' : ''}>前一页</a>
+                </c:otherwise>
+              </c:choose>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#" data-original-title="将在Mybatis课程实现" data-toggle="tooltip">后一页</a>
+            <c:forEach begin="1" end="${totalPages}" var="pageNum">
+              <li class="page-item ${pageNum == currentPage ? 'active' : ''}">
+                <c:choose>
+                  <c:when test="${category != null}">
+                    <a class="page-link" href="category?method=list&id=${category.id}&page=${pageNum}&size=${pageSize}">${pageNum}</a>
+                  </c:when>
+                  <c:otherwise>
+                    <a class="page-link" href="category?method=all&page=${pageNum}&size=${pageSize}">${pageNum}</a>
+                  </c:otherwise>
+                </c:choose>
+              </li>
+            </c:forEach>
+            <li class="page-item">
+              <c:choose>
+                <c:when test="${category != null}">
+                  <a class="page-link" href="category?method=list&id=${category.id}&page=${currentPage + 1}&size=${pageSize}" ${currentPage == totalPages ? 'disabled' : ''}>后一页</a>
+                </c:when>
+                <c:otherwise>
+                  <a class="page-link" href="category?method=all&page=${currentPage + 1}&size=${pageSize}" ${currentPage == totalPages ? 'disabled' : ''}>后一页</a>
+                </c:otherwise>
+              </c:choose>
             </li>
           </ul>
         </nav>

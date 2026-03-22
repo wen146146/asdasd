@@ -60,4 +60,28 @@ public class ProductServiceImpl implements ProductService {
 		// 返回: 符合条件的商品列表
 		return getProductMapper().findByKeywords(name, brief, detail);
 	}
+	
+	@Override
+	public List<Product> findBypage(Integer categoryId, Integer page, Integer size) {
+		// 数据库操作: 分页查询商品
+		// 参数: categoryId - 分类ID, page - 页码, size - 每页数量
+		// 返回: 分页商品列表
+		return getProductMapper().findBypage(categoryId, page, size);
+	}
+	
+	@Override
+	public Integer countByCategoryId(Integer categoryId) {
+		// 数据库操作: 查询指定分类的商品总数
+		// 参数: categoryId - 分类ID
+		// 返回: 商品总数
+		return getProductMapper().countByCategoryId(categoryId);
+	}
+	
+	@Override
+	public Integer countAll() {
+		// 数据库操作: 查询所有商品总数
+		// 参数: 无
+		// 返回: 商品总数
+		return getProductMapper().countAll();
+	}
 }

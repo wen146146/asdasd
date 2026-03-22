@@ -4,6 +4,9 @@
     <settings>
         <setting name="cacheEnabled" value="true"/>
     </settings>
+    <plugins>
+        <plugin interceptor="com.xhxy.eshop.interceptor.PageInterceptor"/>
+    </plugins>
     <environments default="mysql">
         <environment id="mysql">
             <transactionManager type="JDBC"/>

@@ -23,4 +23,13 @@ public interface ProductService {
 	
 	// 根据用户输入的关键词（名称、简介、详情）搜索
 	public List<Product> findByKeywords( String name, String brief, String detail);
+	
+	// 分页查询商品
+	public List<Product> findBypage(Integer categoryId, Integer page, Integer size);
+	
+	// 查询指定分类的商品总数
+	public Integer countByCategoryId(Integer categoryId);
+	
+	// 查询所有商品总数
+	public Integer countAll();
 }
