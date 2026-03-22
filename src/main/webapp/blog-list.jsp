@@ -82,15 +82,16 @@
       <div class="col-12  justify-content-end">
         <nav aria-label="Page navigation">
           <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" href="#" data-original-title="将在Mybatis课程实现" data-toggle="tooltip">前一页</a>
+            <li class="page-item">
+              <a class="page-link" href="blog?method=index&page=${currentPage - 1}&size=${pageSize}" ${currentPage == 1 ? 'disabled' : ''}>前一页</a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#" data-original-title="将在Mybatis课程实现" data-toggle="tooltip">后一页</a>
+            <c:forEach begin="1" end="${totalPages}" var="pageNum">
+              <li class="page-item ${pageNum == currentPage ? 'active' : ''}">
+                <a class="page-link" href="blog?method=index&page=${pageNum}&size=${pageSize}">${pageNum}</a>
+              </li>
+            </c:forEach>
+            <li class="page-item">
+              <a class="page-link" href="blog?method=index&page=${currentPage + 1}&size=${pageSize}" ${currentPage == totalPages ? 'disabled' : ''}>后一页</a>
             </li>
           </ul>
         </nav>

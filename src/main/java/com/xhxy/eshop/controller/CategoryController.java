@@ -52,6 +52,9 @@ public class CategoryController extends BaseServlet {
 		
 		// 查询顶层分类列表
 		List<Category> topCategoryList = categoryService.findTopCategory();
+		for (Category topCategory : topCategoryList){
+			topCategory.setChildren(categoryService.findChildCategory(topCategory.getId()));
+		}
 		// 查询指定分类
 		Category category = categoryService.findById(id);
 		

@@ -34,4 +34,15 @@
 		left join user u on b.admin_id = u.id
 		order by b.createtime desc limit #{n}
 	</select>
+	
+	<select id="findBypage" resultMap="BlogResultMap">
+		select b.id, b.title, b.pic, b.content, b.createtime, b.admin_id, u.username as admin_username, u.department as admin_department
+		from blog b
+		left join user u on b.admin_id = u.id
+		order by b.createtime desc limit #{start}, #{limit}
+	</select>
+	
+	<select id="countAll" resultType="java.lang.Integer">
+		select count(*) from blog
+	</select>
 </mapper>

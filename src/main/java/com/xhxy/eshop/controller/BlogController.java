@@ -28,13 +28,34 @@ public class BlogController  extends BaseServlet {
 	
 	// 文章列表
 	// 功能: 获取所有博客文章列表
-	// 参数: 无
+	// 参数: page（请求参数）- 页码，默认1
+	//       size（请求参数）- 每页数量，默认6
 	// 返回页面: blog-list.jsp
-	// 数据库操作: BlogService.findAll() -> 查询所有文章
+	// 数据库操作: BlogService.findBypage() -> 分页查询文章
+	//             BlogService.countAll() -> 查询文章总数
 	public String index(HttpServletRequest request, HttpServletResponse response) {
-		List<Blog> blogs = blogService.findAll();
+		// 获取分页参数
+		String pageStr = request.getParameter("page");
+		String sizeStr = request.getParameter("size");
+		
+		Integer page = (pageStr != null && !pageStr.isEmpty()) ? Integer.parseInt(pageStr) : 1;
+		Integer size = (sizeStr != null && !sizeStr.isEmpty()) ? Integer.parseInt(sizeStr) : 6;
+		
+		// 分页查询博客列表
+		List<Blog> blogs = blogService.findBypage(page, size);
+		
+		// 查询博客总数
+		Integer totalCount = blogService.countAll();
+		
+		// 计算总页数
+		Integer totalPages = (totalCount + size - 1) / size;
 		
 		request.setAttribute("blogs", blogs);
+		request.setAttribute("currentPage", page);
+		request.setAttribute("pageSize", size);
+		request.setAttribute("totalPages", totalPages);
+		request.setAttribute("totalCount", totalCount);
+		
 		return "blog-list.jsp";
 	}
 	

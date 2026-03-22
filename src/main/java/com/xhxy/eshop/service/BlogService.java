@@ -13,4 +13,10 @@ public interface BlogService {
 	
 	// 查询某篇推荐文章
 	Blog findByBlogId(Integer blogId);
+	
+	// 分页查询博客
+	List<Blog> findBypage(Integer page, Integer size);
+	
+	// 查询博客总数
+	Integer countAll();
 }

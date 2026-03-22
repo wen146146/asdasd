@@ -36,4 +36,20 @@ public class BlogServiceImpl implements BlogService {
 		// 返回: 最新博客列表
 		return getBlogMapper().findLatestBlog(rows);
 	}
+	
+	@Override
+	public List<Blog> findBypage(Integer page, Integer size) {
+		// 数据库操作: 分页查询博客
+		// 参数: page - 页码, size - 每页数量
+		// 返回: 分页博客列表
+		return getBlogMapper().findBypage(page, size);
+	}
+	
+	@Override
+	public Integer countAll() {
+		// 数据库操作: 查询博客总数
+		// 参数: 无
+		// 返回: 博客总数
+		return getBlogMapper().countAll();
+	}
 }
